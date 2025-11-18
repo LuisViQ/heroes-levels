@@ -1,28 +1,27 @@
 // informações do heroi
-let hero = ["Luis Queiroz", 17000]
-let nivel
+let hero = ["Luis Queiroz", 7001]
 
 if (hero[1] <= 1000){ //Caso Ferro
-    nivel = "ferro"
+    hero.push("ferro")
 } 
 else if (hero[1] <= 2000){//Caso Bronze
-    nivel = "bronze"
+    hero.push("bronze")
 }
 else if (hero[1] <= 5000){//Caso Prata
-    nivel = "Prata"
+    hero.push("prata")
 }
 else if (hero[1] <= 7000){//Caso Ouro
-    nivel = "Ouro"
+    hero.push("ouro")
 }
 else if (hero[1] <= 8000){//Caso Platina
-    nivel = "Platina"
+    hero.push("platina")
 }
 else if (hero[1] <= 9000){//Caso Ascendente
-    nivel = "Ascendente"
+    hero.push("ascendente")
 }
 else if (hero[1] <= 10000){ //Caso Imortal
-    nivel = "Imortal"
-} else {
-    nivel = "Radiante"
+    hero.push("imortal")
+} else { //Caso radiante
+    hero.push("radiante")
 }
-console.log(nivel)
+console.log("O Herói de nome " + hero[0] + " está no nível de " + hero[2]) //Mensagem do nivel e nome 
