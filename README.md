@@ -53,7 +53,3 @@ const entradas = fs.readFileSync(0, "utf8").trim().split("\n");
 ```
 e adapte as saidas para `console.log`.
 
-## Ideias de melhoria
-- Implementar a logica completa em `Atividade Formacao TS/app.ts`.
-- Adicionar exemplos de entrada/saida em cada desafio.
-- Criar scripts utilitarios para testar localmente os desafios que dependem de `gets/print`.
