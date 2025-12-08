@@ -1,0 +1,33 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./build",
+
+    // Environment Settings - Node com CommonJS
+    "module": "CommonJS",
+    "target": "ES2020",
+    "moduleResolution": "Node",
+    "types": [],
+
+    // Outras saídas
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Ajuda a usar `import` de libs CommonJS sem dor
+    "esModuleInterop": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended Options
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ]
+}
