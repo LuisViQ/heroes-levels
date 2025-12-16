@@ -57,7 +57,7 @@ export const LoginCard: FC = () => {
         Olá{" "}{displayName}{" "}faça login para continuar
       </Text>
 
-      <Box>
+      <Box> 
         <Input
           placeholder="E-mail"
           type="email"
