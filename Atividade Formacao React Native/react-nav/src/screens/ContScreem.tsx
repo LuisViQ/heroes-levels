@@ -14,7 +14,7 @@ import { OutLineButton } from "../components/OutLineButton";
 export function ContScreen() {
   const { goToHome } = useNavigationActions();
   return (
-    <ScrollView contentContainerStyle={styles.page}>
+    <View style={styles.page}>
       <StatusBar style="light" />
       {/* Header */}
       <Header
@@ -71,6 +71,6 @@ export function ContScreen() {
           Prefere outro horário? Envie um email que retorno assim que possível.
         </Text>
       </MainCard>
-    </ScrollView>
+    </View>
   );
 }
