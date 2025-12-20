@@ -4,7 +4,6 @@ const { Screen, Navigator } = createStackNavigator();
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { ContScreen } from "../screens/ContScreem";
-import { styles } from "./Styles";
 export function StackRoutes() {
   return (
     <Navigator>
