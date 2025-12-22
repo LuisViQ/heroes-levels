@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { styles } from "./styles";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStacksParamList } from "../../App";
+import UserContextProvider, { UserContext } from "../contexts/userContext";
 
-export function HomeScreen() {
+type HomeScreenProps = {
+  navigation: StackNavigationProp<RootStacksParamList, "Home">;
+};
+export function HomeScreen({ navigation }: HomeScreenProps) {
   const [inputText, setInputText] = useState("");
-
+  const userContext = useContext(UserContext);
+  const navigateToUserScreen = () => {
+    userContext?.save(inputText);
+    navigation.navigate("User", { username: inputText });
+  };
   return (
-    <View style={styles.container}>
+    <View>
       <TextInput
-        placeholder="Digite seu nome"
+        placeholder="Digite seu nome.. "
         value={inputText}
         onChangeText={(text) => {
           setInputText(text);
