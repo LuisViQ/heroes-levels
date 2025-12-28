@@ -1,93 +1,79 @@
-# Estudos em JavaScript, TypeScript e React Native
+# Aulas GPM — JavaScript, TypeScript e React Native
 
-Colecao de exercicios e desafios resolvidos durante cursos e trilhas na DIO, no Curso em Video e na Formacao React Native. Cada pasta e independente e pode ser explorada separadamente.
+Repositório de estudos organizado por trilhas. Aqui tem desafios rápidos, mini projetos e apps completos. Cada pasta é independente: entre, rode, e volte quando quiser.
 
-## Estrutura
-- `Atividade Formacao TS/`
-  - `Fundamentos do TS/`: Dio Bank em TypeScript com classes de conta (People, Company, Bonus).
-  - `Complementares/`: estacionamento no navegador com controle em localStorage (`index.html`, `script.ts/js`).
-  - `Complementares 2/`: lista de tarefas com prioridade em TS (`app.ts/js` + `index.html`).
-  - `IntroducaoNodeEAvancado/`: API Express + TypeORM + SQLite para CRUD basico de usuarios.
-  - `Introducao ao React/my-app-ts/`: app React + TypeScript com layout e rotas `Home`/`Conta`.
-- `Atividade Formacao React Native/`
-  - `introduicaoaoreactnative/`: toggle on/off com imagens e StatusBar dinamica.
-  - `aula-states/`: contador simples usando `useReducer`.
-  - `bat-help/`: tela do Bat Sinal com formulario de contato.
-  - `bat-pass-app/`: gerador de senha com copia para clipboard.
-  - `react-nav/`: portfolio mobile com React Navigation (Home/Contato), cards e links externos, com `eas.json` para build.
-- `Atividades JS ES6/`: exemplos de async/await e `fetch` consumindo `data.json` direto no navegador via `index.html`.
-- `Atividades DIO AULAS/`
-  - `Desafio1/`: ranking de heroi por XP.
-  - `Desafio2/`: calculo de nivel por saldo de vitorias.
-  - `Desafio3/`: classes basicas de personagem e ataque.
-- `Atividades DIO REFINANDO/` - sete desafios com entrada via `gets/print` da plataforma:
-  - `Gerenciamento de Itens Magicos/`
-  - `Pontos de Experiencia/`
-  - `Combinando Nomes de Pokemons/`
-  - `Capturando Pokemons Iniciais/`
-  - `Coleta de Tesouros no Dungeon/`
-  - `Desafio do Heroi/`
-  - `Geracao de Biomas em um Mundo de Blocos/`
-- `Atividades CURSO EM VIDEO JS/`
-  - `aula #04` a `aula #10`: exercicios rapidos de sintaxe JS/HTML.
-  - `exercicio #1` a `exercicio #4`: praticas completas com HTML/CSS/JS.
+## O que você encontra
+- fundamentos de JS com exercícios curtos
+- desafios de lógica da DIO (incluindo versões refinadas)
+- projetos em TypeScript (web e Node)
+- apps mobile com React Native (Expo)
 
-## Como executar
+## Projetos em destaque
+- **Dio Bank (TS)**: classes, herança e regras de negócio simples.
+- **API Node + TypeORM**: CRUD com SQLite e migrations.
+- **React + TS**: app com rotas e layout base.
+- **React Native (Expo)**: portfólio mobile, gerador de senha, tela Bat-Sinal.
+
+## Mapa rápido
+| Pasta | O que é | Como executar |
+| --- | --- | --- |
+| `Atividade Formacao TS/` | TypeScript + Node + React | `npm install` / `npm run dev` / `npm start` |
+| `Atividade Formacao React Native/` | Apps Expo | `npm install` / `npm start` |
+| `Atividades JS ES6/` | async/await + fetch | servidor estático |
+| `Atividades DIO AULAS/` | desafios de lógica | `node index.js` |
+| `Atividades DIO REFINANDO/` | desafios com `gets/print` | adaptar stdin |
+| `Atividades CURSO EM VIDEO JS/` | exercícios JS/HTML | abrir no navegador |
+
+## Por onde começar
+1. **JavaScript base**: `Atividades CURSO EM VIDEO JS/` e depois `Atividades JS ES6/`.
+2. **Lógica e desafios**: `Atividades DIO AULAS/` e `Atividades DIO REFINANDO/`.
+3. **TypeScript**: `Atividade Formacao TS/Fundamentos do TS/`.
+4. **Front-end**: `Atividade Formacao TS/Introducao ao React/my-app-ts/`.
+5. **Mobile**: `Atividade Formacao React Native/react-nav/`.
+
+## Como rodar (atalhos)
 ### TypeScript / Node / React
-- **Fundamentos do TS (Dio Bank)**
-  ```bash
-  cd "Atividade Formacao TS/Fundamentos do TS"
-  npm install
-  npm run dev
-  ```
+```bash
+cd "Atividade Formacao TS/Fundamentos do TS"
+npm install
+npm run dev
+```
 
-- **API Node + TypeORM (IntroducaoNodeEAvancado)**
-  ```bash
-  cd "Atividade Formacao TS/IntroducaoNodeEAvancado"
-  npm install
-  npm run migration:run   # cria tabelas SQLite em src/database/db.sqlite
-  npm run dev             # server em http://localhost:5000
-  ```
+```bash
+cd "Atividade Formacao TS/IntroducaoNodeEAvancado"
+npm install
+npm run migration:run
+npm run dev
+```
 
-- **App React + TS**
-  ```bash
-  cd "Atividade Formacao TS/Introducao ao React/my-app-ts"
-  npm install
-  npm start
-  ```
+```bash
+cd "Atividade Formacao TS/Introducao ao React/my-app-ts"
+npm install
+npm start
+```
 
-- **Complementares (1 e 2)**: abra o `index.html` de cada pasta em um servidor estatico simples (ex.: `npx http-server .`) para testar o estacionamento e a lista de tarefas.
+### React Native (Expo)
+```bash
+cd "Atividade Formacao React Native/react-nav"
+npm install
+npm start
+```
+Troque o caminho por `bat-help`, `bat-pass-app`, `aula-states` ou `introduicaoaoreactnative` para outros apps.
 
-### React Native / Expo
-- **Apps React Native (Expo)**
-  ```bash
-  cd "Atividade Formacao React Native/react-nav"
-  npm install
-  npm start
-  ```
-  Use o Expo Go ou um emulador. Para outros apps, troque o caminho por `bat-help`, `bat-pass-app`, `aula-states` ou `introduicaoaoreactnative`.
+### Navegador
+```bash
+cd "Atividades JS ES6"
+python -m http.server 3000
+```
+Depois abra `http://localhost:3000/index.html`.
 
-### Navegador (ES6 e Curso em Video)
-- **Exemplos ES6**
-  ```bash
-  cd "Atividades JS ES6"
-  python3 -m http.server 3000   # ou npx http-server .
-  # depois abra http://localhost:3000/index.html
-  ```
-- **Curso em Video**: abra cada HTML diretamente no navegador.
-
-### Desafios em Node (AULAS)
-Rode direto com Node:
+### Desafios em Node
 ```bash
 node "Atividades DIO AULAS/Desafio1/index.js"
 node "Atividades DIO AULAS/Desafio2/index.js"
 node "Atividades DIO AULAS/Desafio3/index.js"
 ```
 
-### Desafios DIO REFINANDO
-Os arquivos usam `gets/print` (fornecidos na plataforma DIO). Para testar localmente, substitua por leituras de `stdin`:
-```js
-const fs = require("fs");
-const entradas = fs.readFileSync(0, "utf8").trim().split("\n");
-```
-e adapte as saidas para `console.log`.
+## Observações
+- Os desafios em `Atividades DIO REFINANDO/` usam `gets/print` da plataforma. Para testar localmente, leia do `stdin` e use `console.log`.
+- Cada pasta tem seu próprio contexto e dependências.
