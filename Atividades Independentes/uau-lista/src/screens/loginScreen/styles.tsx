@@ -7,4 +7,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
   },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: "gray",
+    borderRadius: 8, // Adds rounded corners
+    color: "black", // Text input color
+    fontSize: 16,
+  },
 });

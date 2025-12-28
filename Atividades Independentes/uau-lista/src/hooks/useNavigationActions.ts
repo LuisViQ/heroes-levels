@@ -5,6 +5,7 @@ export function useNavigationActions() {
 
   return {
     goToHome: () => navigation.navigate("home"),
-    goToProductDetails: () => navigation.navigate("productDetails")
+    goToProductDetails: () => navigation.navigate("productDetails"),
+    goToMyList: () => navigation.navigate("myList")
   };
 }

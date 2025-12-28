@@ -5,7 +5,7 @@ import { styles } from "./styles";
 import { useNavigationActions } from "../../hooks/useNavigationActions";
 
 type NavigationButtonProps = {
-  where: "home" | "productDetails";
+  where: "home" | "productDetails" | "myList";
   label?: string;
 };
 
@@ -15,6 +15,7 @@ export function NavigationButton({ where, label }: NavigationButtonProps) {
   const actions = {
     home: navigation.goToHome,
     productDetails: navigation.goToProductDetails,
+    myList: navigation.goToMyList,
   } as const;
 
   const handlePress = actions[where];
@@ -22,7 +23,7 @@ export function NavigationButton({ where, label }: NavigationButtonProps) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handlePress}>
-        <Text>{label ?? `Ir para ${where}`}</Text>
+        <Text style={styles.textButton}>{label ?? `Ir para ${where}`}</Text>
       </TouchableOpacity>
     </View>
   );

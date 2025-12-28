@@ -8,6 +8,7 @@ export function HomeScreen() {
   return (
     <View style={styles.container}>
       <NavigationButton where="productDetails" />
+      <NavigationButton where="myList" />
     </View>
   );
 }

@@ -1,35 +1,36 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
+const { Screen, Navigator } = createStackNavigator();
+
 import { LoginScreen } from "../screens/loginScreen";
 import { HomeScreen } from "../screens/homeScreen";
 import { ProductDetail } from "../screens/productDetail";
-
-const Stack = createStackNavigator();
+import { MyList } from "../screens/myList";
 
 export function StackRoutes() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <Navigator>
+      <Screen
         name="login"
         component={LoginScreen}
         options={{ title: "Login", headerShown: false }}
       />
-
-      <Stack.Screen
+      <Screen
         name="home"
         component={HomeScreen}
         options={{ title: "Home", headerShown: true }}
       />
 
-      <Stack.Group
-        screenOptions={{
-          presentation: "transparentModal",
-          headerShown: false,
-          animation: "fade",
-        }}
-      >
-        <Stack.Screen name="productDetails" component={ProductDetail} />
-      </Stack.Group>
-    </Stack.Navigator>
+      <Screen
+        name="productDetails"
+        component={ProductDetail}
+        options={{ title: "Details", headerShown: false }}
+      />
+      <Screen
+        name="myList"
+        component={MyList}
+        options={{ title: "My List", headerShown: false }}
+      />
+    </Navigator>
   );
 }
