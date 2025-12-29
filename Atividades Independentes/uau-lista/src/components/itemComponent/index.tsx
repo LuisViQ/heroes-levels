@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text } from "react-native";
 
 import { styles } from "./styles";
 
@@ -9,16 +9,18 @@ type ItemComponentProps = {
     title: string;
     thumbnail: string;
   };
+  onPress?: () => void;
 };
 
-export function ItemComponent({ item }: ItemComponentProps) {
+export function ItemComponent({ item, onPress }: ItemComponentProps) {
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Text>{item.title}</Text>
+
       <Image
         source={{ uri: item.thumbnail }}
         style={{ width: 80, height: 80 }}
       />
-    </View>
+    </Pressable>
   );
 }
