@@ -5,6 +5,7 @@ import { styles } from "./styles";
 import { LoginForm } from "./LoginForm";
 import { useLoginForm } from "./useLoginForm";
 import { useLoginActions } from "./useLoginActions";
+import { NavigationButton } from "../../components/navigationButton";
 
 export function LoginScreen() {
   const {
@@ -33,6 +34,7 @@ export function LoginScreen() {
         onTogglePasswordVisibility={togglePasswordVisibility}
         onSubmit={handleSubmit}
       />
+      <NavigationButton where="home" />
     </View>
   );
 }
