@@ -22,6 +22,7 @@ export function LocationMap({
       </Text>
       <MapView
         style={styles.map}
+        pointerEvents="none"
         initialRegion={{
           latitude: location.latitude,
           longitude: location.longitude,

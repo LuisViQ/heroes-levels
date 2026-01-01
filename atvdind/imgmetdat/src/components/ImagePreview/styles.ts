@@ -5,11 +5,14 @@ export const styles = StyleSheet.create({
     gap: 6,
   },
   image: {
-    width: "100%",
-    height: 200,
     borderWidth: 3,
     borderColor: "red",
     borderRadius: 8,
+    alignSelf: "center",
+  },
+  imageFallback: {
+    width: "100%",
+    height: 200,
   },
   caption: {
     color: "#333",
