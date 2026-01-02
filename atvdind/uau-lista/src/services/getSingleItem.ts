@@ -1,13 +1,14 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+import { buildApiUrl, buildHeaders } from "./api";
+
 export default async function getSingleItem (id: number) {
- const res = await fetch(`${API_URL}products/${id}`, {
+ const res = await fetch(buildApiUrl(`products/${id}`), {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: buildHeaders(),
   });
 
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(data?.message ?? "Falha na busca de login");
+    throw new Error(data?.message ?? "Falha ao carregar produto");
   }
   return data;
 }

@@ -14,15 +14,28 @@ const getLastName = (name, username) => {
   return parts[parts.length - 1]
 }
 
-const comparePassword = async (plain, hash) => {
+const isBcryptHash = hash => /^\$2[aby]\$/.test(hash)
+
+const comparePassword = async (plain, hash, username) => {
   if (!hash) {
     return false
   }
-  try {
-    return await bcrypt.compare(plain, hash)
-  } catch {
-    return plain === hash
+
+  const plainValue = String(plain ?? '')
+  const hashValue = String(hash ?? '')
+
+  if (isBcryptHash(hashValue)) {
+    return await bcrypt.compare(plainValue, hashValue)
   }
+
+  if (username) {
+    const legacyHash = `hash_${username}_${plainValue}`
+    if (hashValue === legacyHash) {
+      return true
+    }
+  }
+
+  return plainValue === hashValue
 }
 
 export async function login(req, res) {
@@ -37,7 +50,11 @@ export async function login(req, res) {
       return res.status(401).json({ message: 'Credenciais invalidas' })
     }
 
-    const isValid = await comparePassword(password, user.password_hash)
+    const isValid = await comparePassword(
+      password,
+      user.password_hash,
+      user.username
+    )
     if (!isValid) {
       return res.status(401).json({ message: 'Credenciais invalidas' })
     }

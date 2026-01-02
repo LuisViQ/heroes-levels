@@ -29,11 +29,13 @@ export default function ProductsContextProvider({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadProducts = async () => {
+  const loadProducts = async (force: boolean = false) => {
+    if (isLoading && !force) return;
+
     setIsLoading(true);
     setError(null);
     try {
-      const list = await getItem();
+      const list = await getItem({ force });
       setProducts(list);
     } catch (e: any) {
       setError(e?.message ?? "Falha ao carregar produtos");
@@ -50,7 +52,7 @@ export default function ProductsContextProvider({
     products,
     isLoading,
     error,
-    reload: loadProducts,
+    reload: () => loadProducts(true),
   };
 
   return (

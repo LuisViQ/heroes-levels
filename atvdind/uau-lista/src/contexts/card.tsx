@@ -6,9 +6,15 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const STORAGE_KEY = "@cart_items_v1";
+import {
+  addCartItem,
+  clearCart as clearCartRequest,
+  getCart,
+  removeCartItem,
+  updateCartItemQuantity,
+  type CartResponse,
+} from "../services/cart";
+import { LoginContext } from "./loginContext";
 
 export type CartItem = {
   id: number;
@@ -22,13 +28,13 @@ export type AddableItem = Omit<CartItem, "quantity">;
 
 type CartContextProps = {
   items: CartItem[];
-  isReady: boolean; // true quando terminar de carregar do storage
+  isReady: boolean; // true when cart is loaded
   addItem: (item: AddableItem, qty?: number) => void;
-  decreaseItem: (id: number, qty?: number) => void; // diminui quantidade (se zerar, remove)
-  removeItem: (id: number) => void; // remove direto
+  decreaseItem: (id: number, qty?: number) => void;
+  removeItem: (id: number) => void;
   clearCart: () => void;
   total: number;
-  itemsCount: number; // total de unidades (somando quantity)
+  itemsCount: number;
 };
 
 const CartContext = createContext<CartContextProps | null>(null);
@@ -40,73 +46,106 @@ type CartProviderProps = {
 export function CartProvider({ children }: CartProviderProps) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isReady, setIsReady] = useState(false);
+  const loginContext = useContext(LoginContext);
+  const userId = loginContext?.userId ?? 0;
+  const token = loginContext?.token ?? "";
 
-  // 1) Carregar carrinho salvo ao iniciar
+  const applyCart = (cart?: CartResponse) => {
+    if (!cart) return;
+    const safeItems = (cart.items ?? []).map((item) => ({
+      ...item,
+      thumbnail:
+        item.thumbnail ??
+        `https://picsum.photos/seed/${item.id ?? "item"}/600/600`,
+    }));
+    setItems(safeItems);
+  };
+
+  const syncCart = async (action: Promise<CartResponse>) => {
+    try {
+      const cart = await action;
+      applyCart(cart);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Falha ao atualizar carrinho";
+      console.log(message);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw) as CartItem[];
+    let isMounted = true;
 
-          // sanitização básica (evitar crash por dados quebrados)
-          if (Array.isArray(parsed)) setItems(parsed);
+    const loadCart = async () => {
+      if (!userId) {
+        if (isMounted) {
+          setItems([]);
+          setIsReady(true);
         }
-      } catch {
-        // se der ruim, só começa vazio
-        setItems([]);
-      } finally {
-        setIsReady(true);
+        return;
       }
-    })();
-  }, []);
 
-  // 2) Salvar sempre que items mudar (depois que estiver pronto)
-  useEffect(() => {
-    if (!isReady) return;
+      if (isMounted) {
+        setIsReady(false);
+      }
 
-    (async () => {
       try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-      } catch {
-        // falhou salvar? paciência… mas não quebra o app
+        const cart = await getCart(userId, token);
+        if (isMounted) {
+          applyCart(cart);
+        }
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Falha ao carregar carrinho";
+        console.log(message);
+        if (isMounted) {
+          setItems([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsReady(true);
+        }
       }
-    })();
-  }, [items, isReady]);
+    };
+
+    loadCart();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId, token]);
 
   const addItem = (item: AddableItem, qty: number = 1) => {
     const q = qty < 1 ? 1 : qty;
-
-    setItems((prev) => {
-      const found = prev.find((p) => p.id === item.id);
-
-      if (found) {
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + q } : p
-        );
-      }
-
-      return [...prev, { ...item, quantity: q }];
-    });
+    if (!userId) return;
+    void syncCart(addCartItem(userId, item.id, q, token));
   };
 
   const decreaseItem = (id: number, qty: number = 1) => {
     const q = qty < 1 ? 1 : qty;
+    if (!userId) return;
 
-    setItems((prev) => {
-      const next = prev
-        .map((p) => (p.id === id ? { ...p, quantity: p.quantity - q } : p))
-        .filter((p) => p.quantity > 0);
+    const current = items.find((item) => item.id === id);
+    const nextQuantity = (current?.quantity ?? 0) - q;
 
-      return next;
-    });
+    if (nextQuantity <= 0) {
+      void syncCart(removeCartItem(userId, id, token));
+    } else {
+      void syncCart(updateCartItemQuantity(userId, id, nextQuantity, token));
+    }
   };
 
   const removeItem = (id: number) => {
-    setItems((prev) => prev.filter((p) => p.id !== id));
+    if (!userId) return;
+    void syncCart(removeCartItem(userId, id, token));
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => {
+    if (!userId) {
+      setItems([]);
+      return;
+    }
+    void syncCart(clearCartRequest(userId, token));
+  };
 
   const total = useMemo(() => {
     return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -130,7 +169,6 @@ export function CartProvider({ children }: CartProviderProps) {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-// Hook pra facilitar uso
 export function useCart() {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error("useCart deve ser usado dentro de <CartProvider>");

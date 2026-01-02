@@ -1,8 +1,9 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+import { buildApiUrl, buildHeaders } from "./api";
+
 export default async function handleLogin (username: string, password:string) {
- const res = await fetch(`${API_URL}auth/login`, {
+ const res = await fetch(buildApiUrl("auth/login"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: buildHeaders(),
     body: JSON.stringify({
       username,
       password,

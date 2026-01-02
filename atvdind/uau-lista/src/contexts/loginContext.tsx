@@ -3,8 +3,10 @@ import { createContext, useState, type ReactNode } from "react";
 interface UserContextProps {
   name: string;
   token: string;
+  userId: number;
   saveName: (name: string) => void;
   saveToken: (token: string) => void;
+  saveUserId: (id: number) => void;
 }
 
 type LoginContextProviderProps = {
@@ -18,18 +20,24 @@ export default function LoginContextProvider({
 }: LoginContextProviderProps) {
   const [name, setName] = useState("");
   const [token, setToken] = useState("");
+  const [userId, setUserId] = useState(0);
   const saveName = (user: string) => {
     setName(user);
   };
   const saveToken = (token: string) => {
     setToken(token);
   };
+  const saveUserId = (id: number) => {
+    setUserId(id);
+  };
 
   const contextValue: UserContextProps = {
     name,
     token,
+    userId,
     saveName,
     saveToken,
+    saveUserId,
   };
 
   return (

@@ -1,6 +1,5 @@
 import * as productRepository from '../repositories/product.repository.js'
 
-const buildThumbnailUrl = id => `https://picsum.photos/seed/${id}/600/600`
 
 const mapProduct = row => ({
   id: row.id,
@@ -8,7 +7,7 @@ const mapProduct = row => ({
   description: row.product_description,
   price: Number(row.product_price ?? 0),
   stock: Number(row.product_stock_quantity ?? 0),
-  thumbnail: buildThumbnailUrl(row.id)
+  thumbnail: row.thumb_url
 })
 
 export async function getProducts(req, res) {
