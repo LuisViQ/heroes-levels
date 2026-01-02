@@ -4,13 +4,18 @@
   "description": "api for uau-lista project",
   "license": "MIT",
   "author": "luisqueiroz",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.15.1"
   }
 }
